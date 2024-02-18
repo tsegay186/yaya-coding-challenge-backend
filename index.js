@@ -112,7 +112,7 @@ app.get("/transactions/search", async (req, res) => {
   }
 });
 app.get('/', (req, res)=>{
-  req.send('hello')
+  res.send('hello')
 })
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
