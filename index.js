@@ -4,11 +4,6 @@ const crypto = require("crypto");
 const dotenv = require("dotenv");
 const cors = require("cors");
 
-app.get('/', (req, res) => {
-  res.send('hello');
-});
-
-
 // Load environment variables
 dotenv.config();
 
@@ -16,8 +11,6 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(cors());
-app.use(express.static("dist"));
-
 //API credentials (from .env)
 const apiKey = process.env.YAYA_API_KEY;
 const apiSecret = process.env.YAYA_API_SECRET;
@@ -40,6 +33,7 @@ function authHeaders(timestamp, signature) {
   };
 }
 // Route to handle transaction retrieval
+
 app.get("/transactions", async (req, res) => {
   try {
     const endpoint = "/api/en/transaction/find-by-user";
@@ -75,8 +69,7 @@ app.get("/transactions", async (req, res) => {
     // Handle successful response
     res.json({transactions, pageSize, itemsPerPage:transactions.length});
   } catch (error) {
-    console.error(error);
-    res.status(500).send(error);
+    res.status(500).send(error.message);
   }
 });
 app.get("/transactions/search", async (req, res) => {
@@ -115,11 +108,12 @@ app.get("/transactions/search", async (req, res) => {
     res.json({transactions, pageSize, itemsPerPage:transactions.length});
     
   } catch (error) {
-    console.log(error)
     res.send(error.message);
   }
 });
-
+app.get('/', (req, res)=>{
+  req.send('hello')
+})
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
