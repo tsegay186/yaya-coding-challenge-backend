@@ -4,6 +4,11 @@ const crypto = require("crypto");
 const dotenv = require("dotenv");
 const cors = require("cors");
 
+app.get('/', (req, res) => {
+  res.send('hello');
+});
+
+
 // Load environment variables
 dotenv.config();
 
